@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "ds-etna-cms"
+version = "0.1.0"
+description = ""
+authors = ["Andrew Hosgood <andrew.hosgood@nationalarchives.gov.uk>"]
+readme = "README.md"
+packages = [{include = "app"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+black = "^23.7.0"
+flake8 = "^6.1.0"
+isort = "^5.12.0"
+wagtail = "^5.2.2"
+wagtailmedia = "^0.14.5"
+wagtail-headless-preview = "^0.7.0"
+psycopg2-binary = "^2.9.9"
+wagtail-generic-chooser = "^0.6.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 80
+include = '\.pyi?$'
