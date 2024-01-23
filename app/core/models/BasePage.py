@@ -3,12 +3,7 @@ from app.images.models import (
     BaseImageSerializedField,
 )
 from django.db import models
-from wagtail.admin.panels import (
-    FieldPanel,
-    MultiFieldPanel,
-    ObjectList,
-    TabbedInterface,
-)
+from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.api import APIField
 from wagtail.images import get_image_model_string
 from wagtail.images.api.fields import ImageRenditionField
@@ -92,13 +87,24 @@ class BasePage(HeadlessPreviewMixin, Page):
 
     content_panels = Page.content_panels + []
 
-    meta_content_panels = [
+    promote_panels = [
+        MultiFieldPanel(
+            [
+                FieldPanel("slug"),
+                FieldPanel("seo_title"),
+                FieldPanel("search_description"),
+            ],
+            heading="For search engines",
+        ),
+        # MultiFieldPanel(
+        #     [
+        #         FieldPanel("show_in_menus"),
+        #     ],
+        #     heading="For site menus",
+        # ),
         FieldPanel("description"),
         FieldPanel("image"),
         FieldPanel("published_date"),
-    ]
-
-    og_content_panels = [
         MultiFieldPanel(
             [
                 FieldPanel("base_og_title"),
@@ -126,14 +132,7 @@ class BasePage(HeadlessPreviewMixin, Page):
         ),
     ]
 
-    edit_handler = TabbedInterface(
-        [
-            ObjectList(content_panels, heading="Content"),
-            ObjectList(meta_content_panels, heading="Meta"),
-            ObjectList(og_content_panels, heading="Open Graph"),
-            ObjectList(Page.promote_panels, heading="Promote"),
-        ]
-    )
+    settings_panels = Page.settings_panels + []
 
     api_fields = [
         APIField("image", serializer=ImageRenditionField("fill-600x400")),

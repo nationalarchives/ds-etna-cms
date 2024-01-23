@@ -1,3 +1,4 @@
+from app.core.models import BasePage
 from django.contrib.contenttypes.models import ContentType
 from rest_framework.response import Response
 
@@ -9,8 +10,6 @@ from wagtail.api.v2.views import PagesAPIViewSet
 from wagtail.images.api.v2.views import ImagesAPIViewSet
 from wagtail_headless_preview.models import PagePreview
 from wagtailmedia.api.views import MediaAPIViewSet
-
-from app.core.models import BasePage
 
 
 class PagePreviewAPIViewSet(PagesAPIViewSet):
@@ -67,6 +66,7 @@ class CustomPagesAPIViewSet(PagesAPIViewSet):
         "image",
         "published_date",
     ]
+
 
 class CustomImagesAPIViewSet(ImagesAPIViewSet):
     body_fields = ImagesAPIViewSet.body_fields + [
