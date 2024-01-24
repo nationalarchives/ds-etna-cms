@@ -1,5 +1,5 @@
-from app.core.models import BasePage
+from .Article import Article
 
 
-class FocusedArticle(BasePage):
-    subpage_types = []
+class FocusedArticle(Article):
+    pass

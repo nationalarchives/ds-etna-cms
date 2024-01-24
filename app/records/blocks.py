@@ -1,16 +1,15 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils.functional import cached_property
-from django.utils.translation import gettext_lazy as _
-from wagtail import blocks
 from wagtail.api import APIField
+from wagtail.blocks import CharBlock, ChooserBlock, ListBlock, StructBlock
 from wagtail.images.blocks import ImageChooserBlock
 
 from ..ciim.exceptions import ClientAPIError
 from .api import records_client
 
 
-class RecordChooserBlock(blocks.ChooserBlock):
+class RecordChooserBlock(ChooserBlock):
     """Custom chooser block for an externally-held record.
 
     Chooser adapted from the example StreamField block implementation
@@ -106,22 +105,14 @@ class RecordChooserBlock(blocks.ChooserBlock):
         Wagtail's reference index from rebuilding this block"""
         return []
 
-    class Meta:
-        icon = "archive"
 
-
-class RecordLinkBlock(blocks.StructBlock):
-    record = RecordChooserBlock(label=_("Record"))
-    descriptive_title = blocks.CharBlock(
-        label=_("Descriptive title"), max_length=255
-    )
-    record_dates = blocks.CharBlock(label=_("Date(s)"), max_length=100)
+class RecordLinkBlock(StructBlock):
+    record = RecordChooserBlock(label="Record")
+    descriptive_title = CharBlock(label="Descriptive title", max_length=255)
+    record_dates = CharBlock(label="Date(s)", max_length=100)
     thumbnail_image = ImageChooserBlock(
-        label=_("Thumbnail image (optional)"), required=False
+        label="Thumbnail image (optional)", required=False
     )
-
-    class Meta:
-        icon = "archive"
 
     def collection(self):
         return self.record.reference_number
@@ -131,9 +122,5 @@ class RecordLinkBlock(blocks.StructBlock):
     ]
 
 
-class RecordLinksBlock(blocks.StructBlock):
-    items = blocks.ListBlock(RecordLinkBlock, label=_("Items"))
-
-    class Meta:
-        template = "records/blocks/record_links_block.html"
-        icon = "archive"
+class FeaturedRecords(StructBlock):
+    items = ListBlock(RecordLinkBlock)

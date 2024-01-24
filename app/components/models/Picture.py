@@ -4,7 +4,13 @@ from wagtail.blocks import CharBlock, RichTextBlock, StructBlock
 
 
 class Picture(StructBlock):
-    image = APIImageChooserBlock("fill-800x600", required=False)
+    image = APIImageChooserBlock(
+        {
+            "jpg": "max-1200x1200|format-jpeg|jpegquality-80",
+            "webp": "max-1200x1200|format-webp|webpquality-80",
+        },
+        required=False,
+    )
 
     alt_text = CharBlock(
         max_length=100,

@@ -1,4 +1,4 @@
-from app.articles.blocks import ArticlePageStreamBlock
+from app.articles.blocks import ArticleStreamBlock
 from app.core.models import BasePage
 from wagtail.admin.panels import FieldPanel
 from wagtail.api import APIField
@@ -9,7 +9,7 @@ class Article(BasePage):
     subpage_types = []
 
     body = StreamField(
-        ArticlePageStreamBlock, blank=True, null=True, use_json_field=True
+        ArticleStreamBlock, blank=True, null=True, use_json_field=True
     )
 
     content_panels = BasePage.content_panels + [

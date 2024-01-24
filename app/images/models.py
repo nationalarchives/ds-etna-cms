@@ -1,7 +1,6 @@
 from app.records.fields import RecordField
 from django.conf import settings
 from django.db import models
-from django.utils.translation import gettext_lazy as _
 from modelcluster.models import ClusterableModel
 from rest_framework.fields import Field
 from wagtail.api import APIField
@@ -14,110 +13,92 @@ DEFAULT_SENSITIVE_IMAGE_WARNING = "This image contains content which some people
 
 
 class TranscriptionHeadingChoices(models.TextChoices):
-    TRANSCRIPT = "transcript", _("Transcript")
-    PARTIAL_TRANSCRIPTION = "partial-transcript", _("Partial transcript")
+    TRANSCRIPT = "transcript", "Transcript"
+    PARTIAL_TRANSCRIPTION = "partial-transcript", "Partial transcript"
 
 
 class TranslationHeadingChoices(models.TextChoices):
-    TRANSLATION = "translation", _("Translation")
-    MODERN_ENGLISH = "modern-english", _("Modern English")
+    TRANSLATION = "translation", "Translation"
+    MODERN_ENGLISH = "modern-english", "Modern English"
 
 
 class BaseImage(ClusterableModel, AbstractImage):
     title = models.CharField(
         max_length=255,
-        verbose_name=_("title"),
-        help_text=_(
-            "The descriptive name of the image. If this image features in a highlights gallery, this title will be visible on the page."
-        ),
+        verbose_name="title",
+        help_text="The descriptive name of the image. If this image features in a highlights gallery, this title will be visible on the page.",
     )
 
     copyright = models.CharField(
-        verbose_name=_("copyright"),
+        verbose_name="copyright",
         blank=True,
         max_length=200,
-        help_text=_(
-            "Credit for images not owned by TNA. Do not include the copyright symbol."
-        ),
+        help_text="Credit for images not owned by TNA. Do not include the copyright symbol.",
     )
 
     is_sensitive = models.BooleanField(
-        verbose_name=_("This image is considered sensitive"),
+        verbose_name="This image is considered sensitive",
         default=False,
-        help_text=_(
-            "Tick this if the image contains content which some people may find offensive or distressing. For example, photographs of violence or injury detail."
-        ),
+        help_text="Tick this if the image contains content which some people may find offensive or distressing. For example, photographs of violence or injury detail.",
     )
 
     custom_sensitive_image_warning = models.TextField(
-        verbose_name=_(
-            "Why might this image be considered sensitive? (optional)"
-        ),
-        help_text=_(
-            'Replaces the default warning message where the image is displayed. For example: "This image has been marked as potentially sensitive because it contains depictions of violence".'
-        ),
+        verbose_name="Why might this image be considered sensitive? (optional)",
+        help_text='Replaces the default warning message where the image is displayed. For example: "This image has been marked as potentially sensitive because it contains depictions of violence".',
         max_length=200,
         blank=True,
     )
 
     transcription_heading = models.CharField(
-        verbose_name=_("transcript heading"),
+        verbose_name="transcript heading",
         max_length=30,
         choices=TranscriptionHeadingChoices.choices,
         default=TranscriptionHeadingChoices.TRANSCRIPT,
     )
 
     transcription = RichTextField(
-        verbose_name=_("transcript"),
+        verbose_name="transcript",
         features=["bold", "italic", "ol", "ul"],
         blank=True,
         max_length=1500,
-        help_text=_("If the image contains text consider adding a transcript."),
+        help_text="If the image contains text consider adding a transcript.",
     )
 
     translation_heading = models.CharField(
-        verbose_name=_("translation heading"),
+        verbose_name="translation heading",
         max_length=30,
         choices=TranslationHeadingChoices.choices,
         default=TranslationHeadingChoices.TRANSLATION,
-        help_text=_(
-            'If the original transcription language is some earlier form of English, choose "Modern English". If not, choose “Translation”.'
-        ),
+        help_text='If the original transcription language is some earlier form of English, choose "Modern English". If not, choose “Translation”.',
     )
 
     translation = RichTextField(
-        verbose_name=_("translation"),
+        verbose_name="translation",
         features=["bold", "italic", "ol", "ul"],
         blank=True,
         max_length=1500,
-        help_text=_(
-            "An optional English / Modern English translation of the transcription."
-        ),
+        help_text="An optional English / Modern English translation of the transcription.",
     )
 
     # For Highlights
 
     record = RecordField(
-        verbose_name=_("related record"),
+        verbose_name="related record",
         db_index=True,
         blank=True,
-        help_text=_(
-            "If the image relates to a specific record, select that record here."
-        ),
+        help_text="If the image relates to a specific record, select that record here.",
     )
     record.wagtail_reference_index_ignore = True
 
     record_dates = models.CharField(
-        verbose_name=_("record date(s)"),
+        verbose_name="record date(s)",
         max_length=100,
         blank=True,
-        help_text=_(
-            "Date(s) related to the selected record (max length: 100 chars)."
-        ),
+        help_text="Date(s) related to the selected record (max length: 100 chars).",
     )
 
     description = RichTextField(
-        verbose_name=_("description"),
+        verbose_name="description",
         help_text=(
             "This text will appear in highlights galleries. A 100-300 word "
             "description of the story of the record and why it is significant."
@@ -178,13 +159,10 @@ class BaseImage(ClusterableModel, AbstractImage):
 
 
 class BaseImageBasicSerializedField(ImageRenditionField):
-    """A custom serializer used in Wagtails v2 API."""
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
     def to_representation(self, value):
-        """Return the image URL, title and dimensions."""
         return super().to_representation(value) | {
             "title": value.title,
             "description": value.description,
@@ -192,13 +170,10 @@ class BaseImageBasicSerializedField(ImageRenditionField):
 
 
 class BaseImageSerializedField(BaseImageBasicSerializedField):
-    """A custom serializer used in Wagtails v2 API."""
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
     def to_representation(self, value):
-        """Return the image URL, title and dimensions."""
         return super().to_representation(value) | {
             "copyright": value.copyright,
             "transcription_heading": value.transcription_heading,
