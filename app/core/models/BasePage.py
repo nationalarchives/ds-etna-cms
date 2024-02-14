@@ -137,12 +137,15 @@ class BasePage(HeadlessPreviewMixin, Page):
     api_fields = [
         APIField("image", serializer=ImageRenditionField("fill-600x400")),
         APIField(
+            "base_og_image", serializer=ImageRenditionField("fill-600x400")
+        ),
+        APIField(
             "facebook_og_image",
-            serializer=BaseImageBasicSerializedField("fill-1200x630"),
+            serializer=ImageRenditionField("fill-1200x630"),
         ),
         APIField(
             "twitter_og_image",
-            serializer=BaseImageSerializedField("fill-1200x630"),
+            serializer=ImageRenditionField("fill-1200x600"),
         ),
     ]
 

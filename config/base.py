@@ -24,6 +24,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # Application definition
 
 INSTALLED_APPS = [
+    "app.authors",
     "app.articles",
     "app.ciim",
     "app.components",

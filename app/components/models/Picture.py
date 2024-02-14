@@ -6,8 +6,8 @@ from wagtail.blocks import CharBlock, RichTextBlock, StructBlock
 class Picture(StructBlock):
     image = APIImageChooserBlock(
         {
-            "jpg": "max-1200x1200|format-jpeg|jpegquality-80",
-            "webp": "max-1200x1200|format-webp|webpquality-80",
+            "jpg": "max-900x900|format-jpeg|jpegquality-80",
+            "webp": "max-900x900|format-webp|webpquality-80",
         },
         required=False,
     )

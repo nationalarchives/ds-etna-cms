@@ -1,4 +1,10 @@
-from app.components.models import Blockquote, Hero, Paragraph, Picture
+from app.components.models import (
+    Blockquote,
+    Hero,
+    Paragraph,
+    Picture,
+    SubHeading,
+)
 from app.records.blocks import FeaturedRecords
 from django.utils.text import slugify
 from wagtail.blocks import CharBlock, StreamBlock, StructBlock
@@ -10,10 +16,11 @@ class SectionContentBlock(StreamBlock):
     # promoted_item = PromotedItemBlock()
     # promoted_list = PromotedListBlock()
     blockquote = Blockquote()
+    featured_records = FeaturedRecords()
     hero = Hero()
     paragraph = Paragraph()
     picture = Picture()
-    featured_records = FeaturedRecords()
+    sub_heading = SubHeading()
 
 
 class SectionBlock(StructBlock):
