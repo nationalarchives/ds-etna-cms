@@ -17,8 +17,8 @@ class Hero(StructBlock):
 
     image = APIImageChooserBlock(
         {
-            "large": "fill-1200x400|format-jpeg|jpegquality-60",
-            "large_webp": "fill-1200x400|format-webp|webpquality-80",
+            "large": "fill-1200x480|format-jpeg|jpegquality-60",
+            "large_webp": "fill-1200x480|format-webp|webpquality-80",
             "small": "fill-600x400|format-jpeg|jpegquality-60",
             "small_webp": "fill-600x400|format-webp|webpquality-80",
         },
