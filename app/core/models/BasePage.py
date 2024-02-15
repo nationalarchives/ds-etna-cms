@@ -135,18 +135,35 @@ class BasePage(HeadlessPreviewMixin, Page):
     settings_panels = Page.settings_panels + []
 
     api_fields = [
-        APIField("image", serializer=ImageRenditionField("fill-600x400|format-jpeg|jpegquality-60")),
-        APIField("image_webp", serializer=ImageRenditionField("fill-600x400|format-webp|webpquality-80", source="image")),
         APIField(
-            "base_og_image", serializer=ImageRenditionField("fill-600x400|format-jpeg|jpegquality-80")
+            "image",
+            serializer=ImageRenditionField(
+                "fill-600x400|format-jpeg|jpegquality-60"
+            ),
+        ),
+        APIField(
+            "image_webp",
+            serializer=ImageRenditionField(
+                "fill-600x400|format-webp|webpquality-80", source="image"
+            ),
+        ),
+        APIField(
+            "base_og_image",
+            serializer=ImageRenditionField(
+                "fill-600x400|format-jpeg|jpegquality-80"
+            ),
         ),
         APIField(
             "facebook_og_image",
-            serializer=ImageRenditionField("fill-1200x630|format-jpeg|jpegquality-80"),
+            serializer=ImageRenditionField(
+                "fill-1200x630|format-jpeg|jpegquality-80"
+            ),
         ),
         APIField(
             "twitter_og_image",
-            serializer=ImageRenditionField("fill-1200x600|format-jpeg|jpegquality-80"),
+            serializer=ImageRenditionField(
+                "fill-1200x600|format-jpeg|jpegquality-80"
+            ),
         ),
     ]
 
