@@ -44,6 +44,7 @@ class CustomPagesAPIViewSet(PagesAPIViewSet):
     meta_fields = PagesAPIViewSet.meta_fields + [
         "description",
         "image",
+        "image_webp",
         "published_date",
         "base_og_title",
         "base_og_description",
