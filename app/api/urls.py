@@ -61,6 +61,7 @@ class CustomPagesAPIViewSet(PagesAPIViewSet):
     listing_default_fields = PagesAPIViewSet.listing_default_fields + [
         "description",
         "image",
+        "image_webp",
         "published_date",
     ]
 
