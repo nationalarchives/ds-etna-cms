@@ -33,7 +33,7 @@ services:
       - pgdata:/var/lib/postgresql/data
 
   dev:
-    image: ghcr.io/nationalarchives/tna-python-dev:preview
+    image: ghcr.io/nationalarchives/tna-python-dev:latest
     volumes:
       - ./:/app
 
